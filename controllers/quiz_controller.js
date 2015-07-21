@@ -29,7 +29,7 @@ exports.show = function(req, res) {
 //GET /quizzes/:id/answer
 exports.answer = function(req, res) {
   var resultado = 'Incorrecto';
-  if(req.query.respuesta === quiz.respuesta) {
+  if(req.query.respuesta === req.quiz.respuesta) {
     resultado = 'Correcto';
   }
   res.render('quizzes/answer', { quiz: req.quiz, respuesta: resultado});
