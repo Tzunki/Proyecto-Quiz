@@ -19,7 +19,7 @@ exports.index = function(req, res) {
   if(req.query.search){
     models.Quiz.findAll({
       where:
-        ["`Quizzes`.`pregunta` LIKE '%" +req.query.search.replace(/ /g, '%')+ "%'"]
+        ["pregunta LIKE ?","%" +req.query.search.replace(/ /g, '%')+ "%"]
     }).then(function(quizzes){
       res.render('quizzes/index.ejs', { quizzes: quizzes});
     }).catch(function(error) {next(error);})
