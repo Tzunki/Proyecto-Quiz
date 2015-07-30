@@ -6,6 +6,7 @@
 <% var i; for(i=0; i<quizzes.length; i++) { %>
   <tr>
     <td><a href="quizzes/<%= quizzes[i].id %>"><%= quizzes[i].pregunta %></a></td>
+    <td><%= quizzes[i].tema%></td>
     <td><a href="quizzes/<%= quizzes[i].id %>/edit"><button>Editar</button></a></td>
     <td>
       <form method="post" action="quizzes/<%= quizzes[i].id %>?_method=delete">
