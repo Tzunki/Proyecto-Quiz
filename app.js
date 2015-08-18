@@ -37,6 +37,30 @@ app.use(function(req, res, next){
   next();
 });
 
+app.use(function(req, res, next){
+  //Si han transcurrido más de 2min desde la última transacción hace auto-logout
+  //Guardamos los minutos actuales
+  var minutesNow = new Date()/60000;
+  //Si no existe sesión no es necesario hacer nada
+  if(req.session.user){
+    //Si es la primera transacción tan solo guardaremos los minutos actuales en la sesión
+    if(req.session.user.lastActionTime){
+      //Si han pasado más de 2min desde la última transacción destruimos sesión
+      if((req.session.user.lastActionTime + 2) < (minutesNow)){
+        delete req.session.user;
+      }
+      //Si no han pasado 2min actualizamos los minutos de la última acción de la sesión
+      else{
+        req.session.user.lastActionTime = minutesNow;
+      }
+    }
+    else{
+      req.session.user.lastActionTime = minutesNow;
+    }
+  }
+  next();
+});
+
 app.use('/', routes);
 
 // error handlers
